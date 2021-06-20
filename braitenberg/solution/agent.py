@@ -26,8 +26,8 @@ from preprocessing import preprocess
 
 @dataclass
 class BraitenbergAgentConfig:
-    gain: float = 0.1
-    const: float = 0.1
+    gain: float = 0.15
+    const: float = 0.2
 
 
 class BraitenbergAgent:
@@ -80,6 +80,7 @@ class BraitenbergAgent:
         # now we just compute the activation of our sensors
         l = float(np.sum(P * self.left))
         r = float(np.sum(P * self.right))
+        print(f'Left: {l}, Right: {r}')
 
         # These are big numbers -- we want to normalize them.
         # We normalize them using the history
@@ -89,15 +90,32 @@ class BraitenbergAgent:
         self.r_max = max(r, self.r_max)
         self.l_min = min(l, self.l_min)
         self.r_min = min(r, self.r_min)
+        print(f'Left MAX: {self.l_max}, Right MAX: {self.r_max}')
+        print(f'Left MIN: {self.l_min}, Right MIN: {self.r_min}')
 
         # now rescale from 0 to 1
         ls = rescale(l, self.l_min, self.l_max)
         rs = rescale(r, self.r_min, self.r_max)
+        print(f'RESCALE Left: {ls}, Right: {rs}')
 
         gain = self.config.gain
         const = self.config.const
+        if ls == 0 and rs == 0:
+            const = 0.6
+            
         pwm_left = const + ls * gain
         pwm_right = const + rs * gain
+        print(f'PWM Left: {pwm_left}, PWM Right: {pwm_right}')
+        
+        gamma = 0.95
+        self.l_max *= gamma
+        self.r_max *= gamma
+        self.l_min *= gamma
+        self.r_min *= gamma
+        print(f'Left MAX_af: {self.l_max}, Right MAX_af: {self.r_max}')
+        print(f'Left MIN_af: {self.l_min}, Right MIN_af: {self.r_min}')
+        print()
+        print()
 
         return pwm_left, pwm_right
 
@@ -119,7 +137,14 @@ class BraitenbergAgent:
 def rescale(a: float, L: float, U: float):
     if np.allclose(L, U):
         return 0.0
-    return (a - L) / (U - L)
+    # return (a - L) / (U - L)
+    if a > 0 and U > 0:
+        return (a) / (U)
+    
+    if a <= 0 and L < 0:
+        return (- a) / (L)
+    
+    return 0
 
 
 def main():
