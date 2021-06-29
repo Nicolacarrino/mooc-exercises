@@ -40,8 +40,7 @@ class UnitTestOdometry:
             y_prev,
             theta_prev,
             5 * np.pi / 180,  # wheel rotates of 5 degree
-            10 * np.pi / 180,
-        )  # wheel rotates of 10 degree
+            10 * np.pi / 180)  # wheel rotates of 10 degree
         # given how much the robot rotates with wheels rotation of 5 and 10 degree,
         # calculate the number of steps required to do a circle.
         # this is indipendent fro R and the baseline int this way!

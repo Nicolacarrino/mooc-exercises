@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[ ]:
+# In[116]:
 
 
 import numpy as np
@@ -33,11 +33,36 @@ def PIDController(
         e_y (:double:) current tracking error (automatically becomes prev_e_y at next iteration).
         e_int_y (:double:) current integral error (automatically becomes prev_int_y at next iteration).
     """
-    
+    y_ref += 0.05
     # TODO: these are random values, you have to implement your own PID controller in here
-    omega = np.random.uniform(-8.0, 8.0)
-    e_y = np.random.random()
-    e_int_y = np.random.random()
+    # Tracking error
+    e_y = y_ref - y_hat
+
+    # integral of the error
+    e_int_y = prev_int_y + e_y*delta_t
+
+    # anti-windup - preventing the integral error from growing too much
+    e_int_y = max(min(e_int_y,1),-1)
     
+    e_der = (e_y - prev_e_y)/delta_t
+    
+    k_p = 8
+    k_d = 10
+    k_i = 0.005
+    
+    if abs(e_y) <= 0.07:
+        k_d *= 4
+        if abs(e_der) >= 0.008:
+            k_d *= 4
+            
+    omega = k_p*e_y + k_i*e_int_y + k_d*e_der
+    print()
+    print("k_d  : ", k_d)
+    print("e    : ", e_y)
+    print("e_der: ", e_der)
+    print("e_int: ", e_int_y)
+    print("OMEGA: ", omega)
+    print()
+    print()
     return [v_0, omega], e_y, e_int_y
 
