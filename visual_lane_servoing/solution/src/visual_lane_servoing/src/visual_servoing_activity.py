@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[16]:
+# In[18]:
 
 
 # The function written in this cell will actually be ran on your robot (sim or real). 
@@ -41,7 +41,7 @@ def get_steer_matrix_left_lane_markings(shape):
 
     return steer_matrix_left_lane
 
-# In[22]:
+# In[20]:
 
 
 # The function written in this cell will actually be ran on your robot (sim or real). 
@@ -67,8 +67,8 @@ def get_steer_matrix_right_lane_markings(shape):
     
 #     steer_matrix_right_lane[math.ceil(steer_matrix_right_lane.shape[0]/2):, :gradient.shape[1]] = gradient
     
-    x = np.linspace(3.1, 0, shape[1]//2)
-    y = np.linspace(0, 3.1, shape[0])
+    x = np.linspace(3.2, 0, shape[1]//2)
+    y = np.linspace(0, 3.2, shape[0])
     
     a, b = np.meshgrid(x,y)
     gradient = (a+b)/2
@@ -77,7 +77,7 @@ def get_steer_matrix_right_lane_markings(shape):
     
     return steer_matrix_right_lane
 
-# In[24]:
+# In[22]:
 
 
 # The function written in this cell will actually be ran on your robot (sim or real). 
