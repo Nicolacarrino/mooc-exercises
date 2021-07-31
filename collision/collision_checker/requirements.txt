@@ -1,3 +1,4 @@
 
-dt-protocols-daffy
+dt-protocols-daffy<=6.2.24
 zuper-nodes-z6>=6.2.2
+shapely
