@@ -33,7 +33,6 @@ def PIDController(
         e_y (:double:) current tracking error (automatically becomes prev_e_y at next iteration).
         e_int_y (:double:) current integral error (automatically becomes prev_int_y at next iteration).
     """
-    y_ref += 0.05
     # TODO: these are random values, you have to implement your own PID controller in here
     # Tracking error
     e_y = y_ref - y_hat
@@ -56,8 +55,10 @@ def PIDController(
             k_d *= 4
             
     omega = k_p*e_y + k_i*e_int_y + k_d*e_der
+    
     print()
     print("k_d  : ", k_d)
+    print("y_ref: ", y_ref)
     print("e    : ", e_y)
     print("e_der: ", e_der)
     print("e_int: ", e_int_y)
