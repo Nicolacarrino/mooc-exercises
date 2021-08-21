@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[4]:
+# In[2]:
 
 
 DATASET_DIR="/jupyter_ws/solution/duckietown_dataset"
@@ -9,7 +9,7 @@ IMAGE_SIZE = 416
 # this is the percentage of data that will go into the training set (as opposed to the testing set)
 SPLIT_PERCENTAGE = 0.8
 
-# In[ ]:
+# In[6]:
 
 
 from PIL import Image
@@ -32,14 +32,14 @@ mapping = {
     for key, h in mapping.items()
 }
 
-# In[ ]:
+# In[10]:
 
 
 def segmented_image_one_class(segmented_img, class_name):
     mask = np.all(segmented_img == mapping[class_name], axis=-1)
     return mask
 
-# In[ ]:
+# In[12]:
 
 
 def find_all_bboxes(mask):
@@ -61,7 +61,7 @@ def find_all_bboxes(mask):
 
     return boxes
 
-# In[ ]:
+# In[15]:
 
 
 def find_all_boxes_and_classes(segmented_img):

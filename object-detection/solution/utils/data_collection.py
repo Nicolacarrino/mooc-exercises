@@ -42,7 +42,7 @@ def save_npz(img, boxes, classes):
 
 # some setup
 seed(123)
-MAX_STEPS = 10
+MAX_STEPS = 2000
 nb_of_steps = 0
 
 # we interate over several maps to get more diverse data
@@ -70,7 +70,7 @@ while True:
         break
 
     while True:
-        if nb_of_steps >= MAX_STEPS or inner_steps > 100:
+        if nb_of_steps >= MAX_STEPS or inner_steps > 2000:
             break
 
         action = policy.predict(np.array(obs))
@@ -99,7 +99,7 @@ while True:
         nb_of_steps += 1
         inner_steps += 1
 
-        if done or inner_steps % 100 == 0:
+        if done or inner_steps % 2000 == 0:
             env.reset()
     if nb_of_steps >= MAX_STEPS:
         break
